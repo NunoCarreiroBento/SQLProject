@@ -297,3 +297,29 @@ INSERT INTO `Cinema`.`Bilhetes` (`FuncionárioID`, `ClienteID`, `SessãoID`, `Qu
         //
 
         ------------------------------------------
+
+    5.2 Aqui crio um trigger que impede a compra de um bilhete caso a sessão escolhida não tiver lugares disponiveis suficientes.
+
+        ------------------------------------------
+
+        drop trigger  if exists insert_bilhetes;
+
+        delimiter //
+        create trigger insert_bilhetes
+        before insert on Bilhetes
+        for each row
+        begin
+        DECLARE mensagem VARCHAR(45);
+        DECLARE lugares_disponiveis INT;
+            INSERT INTO messages(message) VALUES('insert_bilhetes');
+            -- Atualizar Tabela 'Sessões'
+            select LugaresDisponiveis into lugares_disponiveis from Sessões
+            where ID = New.SessãoID;
+            if lugares_disponiveis < new.Quantidade then
+            set mensagem = concat('Não existe ',new.Quantidade,' vaga para esta sessão');
+                signal sqlstate '45000' set message_text = mensagem;
+        	end if;
+        end;
+        //
+
+        ------------------------------------------
