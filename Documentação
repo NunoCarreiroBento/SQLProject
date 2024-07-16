@@ -189,7 +189,8 @@ INSERT INTO `Cinema`.`Sessões` (`FilmeID`, `DataHora`, `Sala`, `LugaresDisponiv
 (2, '2024-08-05 20:30:00', 'Sala 3', 75),
 (3, '2024-08-06 17:00:00', 'Sala 1', 100),
 (4, '2024-08-07 19:30:00', 'Sala 2', 60),
-(5, '2024-08-08 22:00:00', 'Sala 3', 85);
+(5, '2024-08-08 22:00:00', 'Sala 3', 85),
+(2, '2024-08-08 23:00:00', 'Sala 2', 1);
 
 -- Inserir registros na tabela Bilhetes
 INSERT INTO `Cinema`.`Bilhetes` (`FuncionárioID`, `ClienteID`, `SessãoID`, `Quantidade`, `Preço`) VALUES
