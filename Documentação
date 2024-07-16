@@ -14,6 +14,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema Cinema
 -- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `Cinema`;
 CREATE SCHEMA IF NOT EXISTS `Cinema` ;
 USE `Cinema` ;
 
@@ -103,6 +104,13 @@ CREATE TABLE IF NOT EXISTS `Cinema`.`Bilhetes` (
     REFERENCES `Cinema`.`Sessões` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `Cinema`.`messages`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Cinema`.`messages` (
+  `message` varchar(45),
 ENGINE = InnoDB;
 
 
@@ -226,4 +234,66 @@ INSERT INTO `Cinema`.`Bilhetes` (`FuncionárioID`, `ClienteID`, `SessãoID`, `Qu
         where Diretor = "Diretor que escolher"
         ------------------------------------------
 
-    4.2
+    4.2 Aqui listo todos as sessões realizadas num determinado periodo
+
+        ------------------------------------------
+        Select * from Sessões
+        where DataHora between 'DataInicial' and 'DataFinal'
+
+        Exemplo:
+
+        Select * from Sessões
+        where DataHora between '2024-07-20' and '2024-07-28'
+
+        ------------------------------------------
+
+    4.3 Aqui listo todos os clientes que compraram mais do que um determinado número de Bilhetes
+
+        ------------------------------------------
+        Select Clientes.Nome, Quantidade, Preço from Bilhetes
+        join Clientes using (ID)
+        Where Quantidade > 'Quantidade que desejar'
+
+        Exemplo:
+
+        Select Clientes.Nome, Quantidade, Preço from Bilhetes
+        join Clientes using (ID)
+        Where Quantidade > '2'
+
+        ------------------------------------------
+
+    4.4 Aqui listo todos os Filmes de um determinado género
+
+        ------------------------------------------
+        Select * from Filmes
+        where Género = 'Género que escolher'
+
+        Exemplo:
+
+        Select * from Filmes
+        where Género = 'Ação'
+
+        ------------------------------------------
+
+5.
+    5.1 Aqui crio um trigger que atualiza a quantidade de lugares disponiveis numa sessão após a compra de um bilhete.
+
+        ------------------------------------------
+
+        drop trigger  if exists Update_Lugares_Disponiveis;
+
+        delimiter //
+        create trigger update_lugares_disponiveis
+        after insert on Bilhetes
+        for each row
+        begin
+        DECLARE mensagem VARCHAR(45);
+            INSERT INTO messages(message) VALUES('update_lugares_disponiveis');
+            -- Atualizar Tabela 'Sessões'
+            UPDATE Sessões
+            SET LugaresDisponiveis = LugaresDisponiveis - NEW.Quantidade
+            WHERE ID = NEW.SessãoID;
+        end;
+        //
+
+        ------------------------------------------
