@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `Cinema`.`Clientes` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Nome` VARCHAR(45) NOT NULL,
   `Email` VARCHAR(45) NOT NULL,
-  `Telefone` INT NOT NULL,
+  `Telefone` INT(9) NOT NULL,
   PRIMARY KEY (`ID`))
 ENGINE = InnoDB;
 
@@ -323,4 +323,99 @@ INSERT INTO `Cinema`.`Bilhetes` (`FuncionárioID`, `ClienteID`, `SessãoID`, `Qu
         end;
         //
 
+        ------------------------------------------
+
+6.
+    6.1 Aqui crio um stored procedure em que registra uma nova compra de bilhetes.
+
+        ------------------------------------------
+
+        DROP PROCEDURE IF EXISTS Insert_Bilhetes;
+        DELIMITER $$
+        CREATE PROCEDURE `Insert_Bilhetes`(in _Funcionario int, _Cliente int, _Sessao int, _Quantidade int, _Preco Decimal(5,2))
+        BEGIN
+        	insert into Bilhetes (FuncionárioID, ClienteID, SessãoID, Quantidade, Preço) values (_Funcionario, _Cliente, _Sessao, _Quantidade, _Preco);
+        END$$
+        DELIMITER ;
+
+        call Insert_Bilhetes(3,5,24,1,7.50)
+
+        ------------------------------------------
+
+    6.2 Aqui crio um stored procedure em que atualiza os dados de um cliente.
+
+        ------------------------------------------
+        DROP PROCEDURE IF EXISTS update_cliente;
+        DELIMITER $$
+        CREATE PROCEDURE `update_cliente`(in _ID int, _Nome varchar(45), _Email varchar(50), _Telefone int(9))
+        BEGIN
+        	update Clientes set Nome = _Nome, Email = _Email, Telefone = _Telefone
+            where ID = _ID;
+        END$$
+        DELIMITER ;
+
+        call update_cliente(11, 'Raquel Ferreira', 'raquel.ferreira@mail.com', '987654321')
+
+        ------------------------------------------
+
+    6.3 Aqui crio um stored procedure em que calcula o total de bilhetes vendidos num determinado periodo de tempo.
+
+        ------------------------------------------
+        DROP PROCEDURE IF EXISTS total_bilhetes;
+        DELIMITER $$
+        CREATE PROCEDURE `total_bilhetes`(in _Data1 DateTime, _Data2 DateTime)
+        BEGIN
+        	select sum(Quantidade) as totalbilhetes from Bilhetes
+            join Sessões using (ID)
+            where DataHora between _Data1 and _Data2;
+        END$$
+        DELIMITER ;
+
+        call total_bilhetes('2024-07-26 00:00:00', '2024-07-28 23:59:59')
+
+        ------------------------------------------
+
+7.
+    7.1 Aqui crio um cursor que faz um relatório que lista todos os filmes exibidos juntamente com a quantidade de bilhetes vendido num determinado periodo de tempo.
+
+        ------------------------------------------
+        CREATE TEMPORARY TABLE IF NOT EXISTS TempResults (
+            Título VARCHAR(45),
+            Género VARCHAR(45),
+            Quantidade INT
+        );
+
+        DROP PROCEDURE IF EXISTS Relatório_Filmes;
+        DELIMITER $$
+        CREATE PROCEDURE `Relatório_Filmes`( in _data1 datetime, _data2 datetime )
+        BEGIN
+            DECLARE done INT DEFAULT FALSE;
+
+            declare _Titulo varchar(45);
+            declare _Género varchar(45);
+            declare _Quantidade int;
+
+            declare cursor1 cursor for
+        	SELECT Filmes.Título, Filmes.Género, sum(Bilhetes.Quantidade) as Quantidade
+        	FROM Bilhetes
+        	join Sessões on Bilhetes.SessãoID = Sessões.ID
+            join Filmes on Sessões.FilmeID = Filmes.ID
+        	WHERE DataHora between _data1 and _data2
+            group by Filmes.Título;
+            DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+            open cursor1;
+        read_loop: LOOP
+        	fetch cursor1 into _Titulo, _Género, _Quantidade;
+        IF done THEN
+        LEAVE read_loop;
+        END IF;
+        	INSERT INTO TempResults (Título, Género, Quantidade)
+        	VALUES (_Titulo, _Género, _Quantidade);
+        END LOOP;
+        CLOSE cursor1;
+        	SELECT * FROM TempResults;
+            DROP TEMPORARY TABLE IF EXISTS TempResults;
+        END$$
+
+        call Relatório_Filmes('2024-07-26 00:00:00', '2024-07-30 23:59:59');
         ------------------------------------------
