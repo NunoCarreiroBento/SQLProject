@@ -280,7 +280,7 @@ where Género = 'Género que escolher'
 Exemplo:
 
 Select * from Filmes
-where Género = 'Ação'
+where Género = 'Ficção Cientifica'
 ```
 ---
 
