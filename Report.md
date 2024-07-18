@@ -1,12 +1,17 @@
 # Documentação para a Avaliação de SQL
 
-## 1. Utilização do MySQL Workbench
+---
 
-Utilização do MySQL Workbench para a realização deste projeto.
+### 1. Desenho da Base de Dados
+
+Utilização do Mysql Workbench para a realização deste projeto.
+
+---
 
 ### 2. Criação da Base de Dados
 
-Criação da base de dados seguindo o modelo atribuído, com uma pequena alteração na tabela "Bilhetes", onde foi criada uma relação com os funcionários para saber qual funcionário vendeu um determinado bilhete para qual cliente.
+Criação da base de dados seguindo o modelo atribuido fazendo uma pequena alteração na tabela "Bilhetes", onde foi feito 
+uma relação com os funcionário para que podermos saber qual funcionário vendeu certo bilhete para qual cliente.
 
 ```sql
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -24,13 +29,13 @@ USE `Cinema` ;
 -- Table `Cinema`.`Filmes`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Cinema`.`Filmes` (
-  `ID` INT NOT NULL AUTO_INCREMENT,
-  `Título` VARCHAR(45) NOT NULL,
-  `Diretor` VARCHAR(45) NOT NULL,
-  `Género` VARCHAR(45) NOT NULL,
-  `Duração` VARCHAR(6) NOT NULL,
-  `Classificação` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`ID`))
+`ID` INT NOT NULL AUTO_INCREMENT,
+`Título` VARCHAR(45) NOT NULL,
+`Diretor` VARCHAR(45) NOT NULL,
+`Género` VARCHAR(45) NOT NULL,
+`Duração` VARCHAR(6) NOT NULL,
+`Classificação` VARCHAR(45) NOT NULL,
+PRIMARY KEY (`ID`))
 ENGINE = InnoDB;
 
 
@@ -38,11 +43,11 @@ ENGINE = InnoDB;
 -- Table `Cinema`.`Clientes`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Cinema`.`Clientes` (
-  `ID` INT NOT NULL AUTO_INCREMENT,
-  `Nome` VARCHAR(45) NOT NULL,
-  `Email` VARCHAR(45) NOT NULL,
-  `Telefone` INT(9) NOT NULL,
-  PRIMARY KEY (`ID`))
+`ID` INT NOT NULL AUTO_INCREMENT,
+`Nome` VARCHAR(45) NOT NULL,
+`Email` VARCHAR(45) NOT NULL,
+`Telefone` INT(9) NOT NULL,
+PRIMARY KEY (`ID`))
 ENGINE = InnoDB;
 
 
@@ -50,11 +55,11 @@ ENGINE = InnoDB;
 -- Table `Cinema`.`Funcionários`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Cinema`.`Funcionários` (
-  `ID` INT NOT NULL AUTO_INCREMENT,
-  `Nome` VARCHAR(45) NOT NULL,
-  `Posição` VARCHAR(45) NOT NULL,
-  `Salário` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`ID`))
+`ID` INT NOT NULL AUTO_INCREMENT,
+`Nome` VARCHAR(45) NOT NULL,
+`Posição` VARCHAR(45) NOT NULL,
+`Salário` VARCHAR(45) NOT NULL,
+PRIMARY KEY (`ID`))
 ENGINE = InnoDB;
 
 
@@ -62,18 +67,18 @@ ENGINE = InnoDB;
 -- Table `Cinema`.`Sessões`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Cinema`.`Sessões` (
-  `ID` INT NOT NULL AUTO_INCREMENT,
-  `FilmeID` INT NOT NULL,
-  `DataHora` DATETIME NOT NULL,
-  `Sala` VARCHAR(45) NOT NULL,
-  `LugaresDisponiveis` INT NOT NULL,
-  PRIMARY KEY (`ID`, `FilmeID`),
-  INDEX `fk_Sessões_Filmes_idx` (`FilmeID` ASC) VISIBLE,
-  CONSTRAINT `fk_Sessões_Filmes`
-    FOREIGN KEY (`FilmeID`)
-    REFERENCES `Cinema`.`Filmes` (`ID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+`ID` INT NOT NULL AUTO_INCREMENT,
+`FilmeID` INT NOT NULL,
+`DataHora` DATETIME NOT NULL,
+`Sala` VARCHAR(45) NOT NULL,
+`LugaresDisponiveis` INT NOT NULL,
+PRIMARY KEY (`ID`, `FilmeID`),
+INDEX `fk_Sessões_Filmes_idx` (`FilmeID` ASC) VISIBLE,
+CONSTRAINT `fk_Sessões_Filmes`
+FOREIGN KEY (`FilmeID`)
+REFERENCES `Cinema`.`Filmes` (`ID`)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -81,53 +86,53 @@ ENGINE = InnoDB;
 -- Table `Cinema`.`Bilhetes`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Cinema`.`Bilhetes` (
-  `ID` INT NOT NULL AUTO_INCREMENT,
-  `FuncionárioID` INT NOT NULL,
-  `ClienteID` INT NOT NULL,
-  `SessãoID` INT NOT NULL,
-  `Quantidade` VARCHAR(45) NOT NULL,
-  `Preço` DECIMAL(5,2) NOT NULL,
-  PRIMARY KEY (`ID`, `FuncionárioID`, `ClienteID`, `SessãoID`),
-  INDEX `fk_Bilhetes_Funcionários1_idx` (`FuncionárioID` ASC) VISIBLE,
-  INDEX `fk_Bilhetes_Clientes1_idx` (`ClienteID` ASC) VISIBLE,
-  INDEX `fk_Bilhetes_Sessões1_idx` (`SessãoID` ASC) VISIBLE,
-  CONSTRAINT `fk_Bilhetes_Funcionários1`
-    FOREIGN KEY (`FuncionárioID`)
-    REFERENCES `Cinema`.`Funcionários` (`ID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Bilhetes_Clientes1`
-    FOREIGN KEY (`ClienteID`)
-    REFERENCES `Cinema`.`Clientes` (`ID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Bilhetes_Sessões1`
-    FOREIGN KEY (`SessãoID`)
-    REFERENCES `Cinema`.`Sessões` (`ID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+`ID` INT NOT NULL AUTO_INCREMENT,
+`FuncionárioID` INT NOT NULL,
+`ClienteID` INT NOT NULL,
+`SessãoID` INT NOT NULL,
+`Quantidade` VARCHAR(45) NOT NULL,
+`Preço` DECIMAL(5,2) NOT NULL,
+PRIMARY KEY (`ID`, `FuncionárioID`, `ClienteID`, `SessãoID`),
+INDEX `fk_Bilhetes_Funcionários1_idx` (`FuncionárioID` ASC) VISIBLE,
+INDEX `fk_Bilhetes_Clientes1_idx` (`ClienteID` ASC) VISIBLE,
+INDEX `fk_Bilhetes_Sessões1_idx` (`SessãoID` ASC) VISIBLE,
+CONSTRAINT `fk_Bilhetes_Funcionários1`
+FOREIGN KEY (`FuncionárioID`)
+REFERENCES `Cinema`.`Funcionários` (`ID`)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION,
+CONSTRAINT `fk_Bilhetes_Clientes1`
+FOREIGN KEY (`ClienteID`)
+REFERENCES `Cinema`.`Clientes` (`ID`)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION,
+CONSTRAINT `fk_Bilhetes_Sessões1`
+FOREIGN KEY (`SessãoID`)
+REFERENCES `Cinema`.`Sessões` (`ID`)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `Cinema`.`messages`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Cinema`.`messages` (
-  `message` varchar(45))
+`message` varchar(45))
 ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
 ```
 
-### 3. Inserção de Dados
+---
 
-Inserção de uma certa quantidade de dados em cada respectiva tabela.
+### 3. Inserção de Dados 
+
+Aqui inserimos uma certa quantidade de dados em cada respetiva tabela.
 
 ```sql
-
 -- Inserir registros na tabela Filmes
 INSERT INTO `Cinema`.`Filmes` (`Título`, `Diretor`, `Género`, `Duração`, `Classificação`) VALUES
 ('The Great Adventure', 'John Smith', 'Ação', '02:00', 'M/12'),
@@ -179,105 +184,235 @@ INSERT INTO `Cinema`.`Sessões` (`FilmeID`, `DataHora`, `Sala`, `LugaresDisponiv
 (8, '2024-07-22 19:00:00', 'Sala 2', 85),
 (9, '2024-07-23 20:45:00', 'Sala 3', 70),
 (10, '2024-07-24 15:00:00', 'Sala 1', 100),
-(1, '2024-07-25 17:15:00', 'Sala 2', 60),
-(2, '2024-07-26 19:45:00', 'Sala 3', 50),
-(3, '2024-07-27 21:00:00', 'Sala 1', 100),
-(4, '2024-07-28 16:00:00', 'Sala 2', 85),
-(5, '2024-07-29 18:30:00', 'Sala 3', 70);
+(1, '2024-07-25 17:15:00', 'Sala 2', 90),
+(2, '2024-07-26 20:00:00', 'Sala 3', 75),
+(3, '2024-07-27 22:30:00', 'Sala 4', 65),
+(4, '2024-07-28 16:45:00', 'Sala 1', 100),
+(5, '2024-07-29 19:15:00', 'Sala 2', 55),
+(6, '2024-07-30 21:30:00', 'Sala 3', 80),
+(7, '2024-07-31 18:00:00', 'Sala 1', 100),
+(8, '2024-08-01 20:45:00', 'Sala 2', 70),
+(9, '2024-08-02 23:00:00', 'Sala 3', 90),
+(10, '2024-08-03 15:30:00', 'Sala 1', 100),
+(1, '2024-08-04 18:00:00', 'Sala 2', 80),
+(2, '2024-08-05 20:30:00', 'Sala 3', 75),
+(3, '2024-08-06 17:00:00', 'Sala 1', 100),
+(4, '2024-08-07 19:30:00', 'Sala 2', 60),
+(5, '2024-08-08 22:00:00', 'Sala 3', 85),
+(2, '2024-08-08 23:00:00', 'Sala 2', 1);
 
 -- Inserir registros na tabela Bilhetes
 INSERT INTO `Cinema`.`Bilhetes` (`FuncionárioID`, `ClienteID`, `SessãoID`, `Quantidade`, `Preço`) VALUES
-(1, 1, 1, '2', 15.00),
-(2, 2, 2, '3', 22.50),
-(3, 3, 3, '1', 7.50),
-(4, 4, 4, '4', 30.00),
-(5, 5, 5, '2', 15.00),
-(6, 6, 6, '5', 37.50),
-(7, 7, 7, '3', 22.50),
-(8, 8, 8, '1', 7.50),
-(9, 9, 9, '4', 30.00),
-(10, 10, 10, '2', 15.00);
-
+(2, 5, 1, '2', 15.00),
+(1, 3, 2, '1', 7.50),
+(8, 4, 3, '3', 22.50),
+(6, 2, 4, '4', 30.00),
+(10, 1, 5, '2', 15.00),
+(3, 6, 6, '1', 7.50),
+(5, 8, 7, '3', 22.50),
+(4, 10, 8, '4', 30.00),
+(7, 9, 9, '2', 15.00),
+(2, 7, 10, '3', 22.50),
+(9, 2, 11, '1', 7.50),
+(6, 5, 12, '4', 30.00),
+(8, 3, 13, '2', 15.00),
+(1, 9, 14, '3', 22.50),
+(10, 4, 15, '1', 7.50),
+(7, 1, 16, '4', 30.00),
+(5, 6, 17, '2', 15.00),
+(4, 8, 18, '3', 22.50),
+(3, 10, 19, '1', 7.50),
+(9, 7, 20, '4', 30.00),
+(2, 5, 21, '3', 22.50),
+(6, 3, 22, '2', 15.00),
+(8, 9, 23, '1', 7.50),
+(1, 4, 24, '4', 30.00),
+(10, 2, 25, '3', 22.50);
 ```
+---
 
 ### 4. Consultas SQL
 
-Criação de várias Concultas para responder a perguntas sobre os dados.
-#### 4.1 Quantos bilhetes foram vendidos por cada funcionário?
+#### 4.1 Aqui listo todos os filmes com os respetivos diretores e géneros
 
 ```sql
-
-SELECT Funcionários.Nome, SUM(Bilhetes.Quantidade) AS TotalBilhetesVendidos
-FROM Bilhetes
-JOIN Funcionários ON Bilhetes.FuncionárioID = Funcionários.ID
-GROUP BY Funcionários.Nome;
-
+Select Título, Diretor, Género From Filmes
 ```
 
-#### 4.2 Qual é o total de receitas geradas por cada filme?
+#### 4.2 Aqui listo todos as sessões realizadas num determinado periodo
 
 ```sql
+Select * from Sessões
+where DataHora between 'DataInicial' and 'DataFinal'
 
-SELECT Filmes.Título, SUM(Bilhetes.Preço) AS ReceitaTotal
-FROM Bilhetes
-JOIN Sessões ON Bilhetes.SessãoID = Sessões.ID
-JOIN Filmes ON Sessões.FilmeID = Filmes.ID
-GROUP BY Filmes.Título;
+Exemplo:
 
+Select * from Sessões
+where DataHora between '2024-07-20' and '2024-07-28'
 ```
 
-#### 4.3 Quantos clientes compraram bilhetes para cada filme?
+#### 4.3 Aqui listo todos os clientes que compraram mais do que um determinado número de Bilhetes
 
 ```sql
+Select Clientes.Nome, Quantidade, Preço from Bilhetes
+join Clientes using (ID)
+Where Quantidade > 'Quantidade que desejar'
 
-SELECT Filmes.Título, COUNT(DISTINCT Bilhetes.ClienteID) AS TotalClientes
-FROM Bilhetes
-JOIN Sessões ON Bilhetes.SessãoID = Sessões.ID
-JOIN Filmes ON Sessões.FilmeID = Filmes.ID
-GROUP BY Filmes.Título;
+Exemplo:
 
+Select Clientes.Nome, Quantidade, Preço from Bilhetes
+join Clientes using (ID)
+Where Quantidade > '2'
 ```
 
-#### 4.4 Qual funcionário gerou mais receita em vendas de bilhetes?
+4.4 Aqui listo todos os Filmes de um determinado género
 
 ```sql
+Select * from Filmes
+where Género = 'Género que escolher'
 
-SELECT Funcionários.Nome, SUM(Bilhetes.Preço) AS ReceitaTotal
-FROM Bilhetes
-JOIN Funcionários ON Bilhetes.FuncionárioID = Funcionários.ID
-GROUP BY Funcionários.Nome
-ORDER BY ReceitaTotal DESC
-LIMIT 1;
+Exemplo:
 
+Select * from Filmes
+where Género = 'Ação'
+```
+---
+
+### 5.Triggers
+
+#### 5.1 Aqui crio um trigger que atualiza a quantidade de lugares disponiveis numa sessão após a compra de um bilhete.
+
+
+```sql
+drop trigger  if exists Update_Lugares_Disponiveis;
+
+delimiter //
+create trigger update_lugares_disponiveis
+after insert on Bilhetes
+for each row
+begin
+DECLARE mensagem VARCHAR(45);
+    INSERT INTO messages(message) VALUES('update_lugares_disponiveis');
+    UPDATE Sessões SET LugaresDisponiveis = LugaresDisponiveis - NEW.Quantidade
+    WHERE ID = NEW.SessãoID;
+end;
+//
 ```
 
-#### 4.5 Qual é a média de bilhetes vendidos por sessão?
+#### 5.2 Aqui crio um trigger que impede a compra de um bilhete caso a sessão escolhida não tiver lugares disponiveis suficientes.
 
 ```sql
+drop trigger  if exists insert_bilhetes;
 
-SELECT AVG(QuantidadeVendida) AS MediaBilhetesVendidos
-FROM (
-    SELECT SUM(Bilhetes.Quantidade) AS QuantidadeVendida
+delimiter //
+create trigger insert_bilhetes
+before insert on Bilhetes
+for each row
+begin
+DECLARE mensagem VARCHAR(45);
+DECLARE lugares_disponiveis INT;
+    INSERT INTO messages(message) VALUES('insert_bilhetes');
+    select LugaresDisponiveis into lugares_disponiveis from Sessões
+    where ID = New.SessãoID;
+    if lugares_disponiveis < new.Quantidade then
+    set mensagem = concat('Não existe ',new.Quantidade,' vaga para esta sessão');
+    signal sqlstate '45000' set message_text = mensagem;
+end if;
+end;
+//
+```
+---
+
+### 6. Stored Procedures
+
+#### 6.1 Aqui crio um stored procedure em que registra uma nova compra de bilhetes.
+
+```sql
+DROP PROCEDURE IF EXISTS Insert_Bilhetes;
+DELIMITER $$
+CREATE PROCEDURE `Insert_Bilhetes`(in _Funcionario int, _Cliente int, _Sessao int, _Quantidade int, _Preco Decimal(5,2))
+BEGIN
+    insert into Bilhetes (FuncionárioID, ClienteID, SessãoID, Quantidade, Preço) values (_Funcionario, _Cliente, _Sessao, _Quantidade, _Preco);
+END$$
+DELIMITER ;
+
+call Insert_Bilhetes(3,5,24,1,7.50)
+```
+
+#### 6.2 Aqui crio um stored procedure em que atualiza os dados de um cliente.
+
+```sql
+DROP PROCEDURE IF EXISTS update_cliente;
+DELIMITER $$
+CREATE PROCEDURE `update_cliente`(in _ID int, _Nome varchar(45), _Email varchar(50), _Telefone int(9))
+BEGIN
+    update Clientes set Nome = _Nome, Email = _Email, Telefone = _Telefone
+    where ID = _ID;
+END$$
+DELIMITER ;
+
+call update_cliente(11, 'Raquel Ferreira', 'raquel.ferreira@mail.com', '987654321')
+```
+
+
+#### 6.3 Aqui crio um stored procedure em que calcula o total de bilhetes vendidos num determinado periodo de tempo.
+
+```sql
+DROP PROCEDURE IF EXISTS total_bilhetes;
+DELIMITER $$
+CREATE PROCEDURE `total_bilhetes`(in _Data1 DateTime, _Data2 DateTime)
+BEGIN
+    select sum(Quantidade) as totalbilhetes from Bilhetes
+    join Sessões using (ID)
+    where DataHora between _Data1 and _Data2;
+END$$
+DELIMITER ;
+
+call total_bilhetes('2024-07-26 00:00:00', '2024-07-28 23:59:59')
+```
+
+### 7. Cursores
+
+#### 7.1 Aqui crio um cursor que faz um relatório que lista todos os filmes exibidos juntamente com a quantidade de bilhetes vendido num determinado periodo de tempo.
+
+```sql
+CREATE TEMPORARY TABLE IF NOT EXISTS TempResults (
+    Título VARCHAR(45),
+    Género VARCHAR(45),
+    Quantidade INT
+);
+
+DROP PROCEDURE IF EXISTS Relatório_Filmes;
+DELIMITER $$
+CREATE PROCEDURE `Relatório_Filmes`( in _data1 datetime, _data2 datetime )
+BEGIN
+    DECLARE done INT DEFAULT FALSE;
+
+    declare _Titulo varchar(45);
+    declare _Género varchar(45);
+    declare _Quantidade int;
+
+declare cursor1 cursor for
+    SELECT Filmes.Título, Filmes.Género, sum(Bilhetes.Quantidade) as Quantidade
     FROM Bilhetes
-    GROUP BY Bilhetes.SessãoID
-) AS TotalBilhetesPorSessão;
+    join Sessões on Bilhetes.SessãoID = Sessões.ID
+    join Filmes on Sessões.FilmeID = Filmes.ID
+    WHERE DataHora between _data1 and _data2
+    group by Filmes.Título;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+open cursor1;
+read_loop: LOOP
+    fetch cursor1 into _Titulo, _Género, _Quantidade;
+IF done THEN
+LEAVE read_loop;
+END IF;
+    INSERT INTO TempResults (Título, Género, Quantidade)
+    VALUES (_Titulo, _Género, _Quantidade);
+END LOOP;
+CLOSE cursor1;
+    SELECT * FROM TempResults;
+    DROP TEMPORARY TABLE IF EXISTS TempResults;
+END$$
 
-```
-
-#### 4.6 Qual filme teve a maior média de bilhetes vendidos por sessão?
-
-```sql
-
-SELECT Filmes.Título, AVG(QuantidadeVendida) AS MediaBilhetesVendidos
-FROM (
-    SELECT Sessões.FilmeID, SUM(Bilhetes.Quantidade) AS QuantidadeVendida
-    FROM Bilhetes
-    JOIN Sessões ON Bilhetes.SessãoID = Sessões.ID
-    GROUP BY Bilhetes.SessãoID
-) AS TotalBilhetesPorSessão
-JOIN Filmes ON TotalBilhetesPorSessão.FilmeID = Filmes.ID
-GROUP BY Filmes.Título
-ORDER BY MediaBilhetesVendidos DESC
-LIMIT 1;
-
+call Relatório_Filmes('2024-07-26 00:00:00', '2024-07-30 23:59:59');
 ```
