@@ -5,6 +5,7 @@
 ### 1. Desenho da Base de Dados
 
 Para a realização deste projeto, foi utilizado a ferramenta de apoio "Mysql Workbench" e a "AWS RDS" para o host do Mysql. 
+![imagem](https://github.com/user-attachments/assets/667ed1e3-cc07-469f-882c-08f678174d63)
 
 ---
 
