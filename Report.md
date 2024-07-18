@@ -376,6 +376,7 @@ DELIMITER ;
 
 call total_bilhetes('2024-07-26 00:00:00', '2024-07-28 23:59:59')
 ```
+---
 
 ### 7. Cursores
 
