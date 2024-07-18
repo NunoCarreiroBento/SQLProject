@@ -3,7 +3,7 @@ Documentação para a Avaliação de SQL
 1. Utilização do Mysql Workbench para a realização deste projeto.
 
 2. Criação da base de dados seguindo o modelo atribuido fazendo uma pequena alteração na tabela "Bilhetes", onde foi feito
-uma relação com os funcionário para que podermos saber qual funcionário vendo certo bilhete a qual cliente.
+uma relação com os funcionário para que podermos saber qual funcionário vendeu certo bilhete para qual cliente.
 
 ---------------------------------------------------------------------
 
@@ -110,7 +110,7 @@ ENGINE = InnoDB;
 -- Table `Cinema`.`messages`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Cinema`.`messages` (
-  `message` varchar(45),
+  `message` varchar(45))
 ENGINE = InnoDB;
 
 
@@ -227,12 +227,6 @@ INSERT INTO `Cinema`.`Bilhetes` (`FuncionárioID`, `ClienteID`, `SessãoID`, `Qu
 
         ------------------------------------------
         Select Título, Diretor, Género From Filmes
-        where Diretor = "Diretor que escolher" and Género = "Género que escolher"
-
-        ou
-
-        Select Título, Diretor, Género From Filmes
-        where Diretor = "Diretor que escolher"
         ------------------------------------------
 
     4.2 Aqui listo todos as sessões realizadas num determinado periodo
