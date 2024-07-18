@@ -120,11 +120,13 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
+```
+
 3. Inserção de Dados
 
 Inserção de uma certa quantidade de dados em cada respectiva tabela.
 
-sql
+```sql
 
 -- Inserir registros na tabela Filmes
 INSERT INTO `Cinema`.`Filmes` (`Título`, `Diretor`, `Género`, `Duração`, `Classificação`) VALUES
@@ -196,21 +198,25 @@ INSERT INTO `Cinema`.`Bilhetes` (`FuncionárioID`, `ClienteID`, `SessãoID`, `Qu
 (9, 9, 9, '4', 30.00),
 (10, 10, 10, '2', 15.00);
 
-4. Relatórios SQL
+```
 
-Criação de vários relatórios para responder a perguntas sobre os dados.
+4. Consultas SQL
+
+Criação de várias Concultas para responder a perguntas sobre os dados.
 4.1 Quantos bilhetes foram vendidos por cada funcionário?
 
-sql
+```sql
 
 SELECT Funcionários.Nome, SUM(Bilhetes.Quantidade) AS TotalBilhetesVendidos
 FROM Bilhetes
 JOIN Funcionários ON Bilhetes.FuncionárioID = Funcionários.ID
 GROUP BY Funcionários.Nome;
 
+```
+
 4.2 Qual é o total de receitas geradas por cada filme?
 
-sql
+```sql
 
 SELECT Filmes.Título, SUM(Bilhetes.Preço) AS ReceitaTotal
 FROM Bilhetes
@@ -218,9 +224,11 @@ JOIN Sessões ON Bilhetes.SessãoID = Sessões.ID
 JOIN Filmes ON Sessões.FilmeID = Filmes.ID
 GROUP BY Filmes.Título;
 
+```
+
 4.3 Quantos clientes compraram bilhetes para cada filme?
 
-sql
+```sql
 
 SELECT Filmes.Título, COUNT(DISTINCT Bilhetes.ClienteID) AS TotalClientes
 FROM Bilhetes
@@ -228,9 +236,11 @@ JOIN Sessões ON Bilhetes.SessãoID = Sessões.ID
 JOIN Filmes ON Sessões.FilmeID = Filmes.ID
 GROUP BY Filmes.Título;
 
+```
+
 4.4 Qual funcionário gerou mais receita em vendas de bilhetes?
 
-sql
+```sql
 
 SELECT Funcionários.Nome, SUM(Bilhetes.Preço) AS ReceitaTotal
 FROM Bilhetes
@@ -239,9 +249,11 @@ GROUP BY Funcionários.Nome
 ORDER BY ReceitaTotal DESC
 LIMIT 1;
 
+```
+
 4.5 Qual é a média de bilhetes vendidos por sessão?
 
-sql
+```sql
 
 SELECT AVG(QuantidadeVendida) AS MediaBilhetesVendidos
 FROM (
@@ -250,9 +262,11 @@ FROM (
     GROUP BY Bilhetes.SessãoID
 ) AS TotalBilhetesPorSessão;
 
+```
+
 4.6 Qual filme teve a maior média de bilhetes vendidos por sessão?
 
-...sql
+```sql
 
 SELECT Filmes.Título, AVG(QuantidadeVendida) AS MediaBilhetesVendidos
 FROM (
@@ -266,4 +280,4 @@ GROUP BY Filmes.Título
 ORDER BY MediaBilhetesVendidos DESC
 LIMIT 1;
 
-...
+```
