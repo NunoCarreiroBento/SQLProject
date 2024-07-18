@@ -228,6 +228,12 @@ INSERT INTO `Cinema`.`Bilhetes` (`FuncionárioID`, `ClienteID`, `SessãoID`, `Qu
 (8, 9, 23, '1', 7.50),
 (1, 4, 24, '4', 30.00),
 (10, 2, 25, '3', 22.50);
+
+Select * from Bilhetes;
+Select * from Clientes;
+Select * from Filmes;
+Select * from Funcionários;
+Select * from Sessões;
 ```
 ---
 
