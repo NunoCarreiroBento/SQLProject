@@ -4,14 +4,14 @@
 
 ### 1. Desenho da Base de Dados
 
-Utilização do Mysql Workbench para a realização deste projeto.
+Para a realização deste projeto, foi utilizado a ferramenta de apoio "Mysql Workbench" e a "AWS RDS" para o host do Mysql. 
 
 ---
 
 ### 2. Criação da Base de Dados
 
-Criação da base de dados seguindo o modelo atribuido fazendo uma pequena alteração na tabela "Bilhetes", onde foi feito 
-uma relação com os funcionário para que podermos saber qual funcionário vendeu certo bilhete para qual cliente.
+Nesta etapa, foi feito a criação da base de dados seguindo o modelo atribuido, fazendo uma pequena alteração na tabela "Bilhetes", onde foi realizado 
+uma relação com a tabela "Funcionários" para que possamos saber qual funcionário vendeu certo bilhete para qual cliente.
 
 ```sql
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -130,7 +130,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 ### 3. Inserção de Dados 
 
-Aqui inserimos uma certa quantidade de dados em cada respetiva tabela.
+Seguidamente à criação da base de dados, podemos inserimos uma certa quantidade de dados.
 
 ```sql
 -- Inserir registros na tabela Filmes
@@ -239,13 +239,13 @@ Select * from Sessões;
 
 ### 4. Consultas SQL
 
-#### 4.1 Aqui listo todos os filmes com os respetivos diretores e géneros
+#### 4.1 Aqui podemos listar todos os filmes com os respetivos diretores e géneros
 
 ```sql
 Select Título, Diretor, Género From Filmes
 ```
 
-#### 4.2 Aqui listo todos as sessões realizadas num determinado periodo
+#### 4.2 Aqui iremos listar todos as sessões realizadas num determinado periodo
 
 ```sql
 Select * from Sessões
@@ -257,7 +257,7 @@ Select * from Sessões
 where DataHora between '2024-07-20' and '2024-07-28'
 ```
 
-#### 4.3 Aqui listo todos os clientes que compraram mais do que um determinado número de Bilhetes
+#### 4.3 Aqui listaremos todos os clientes que compraram mais do que um determinado número de Bilhetes
 
 ```sql
 Select Clientes.Nome, Quantidade, Preço from Bilhetes
@@ -271,7 +271,7 @@ join Clientes using (ID)
 Where Quantidade > '2'
 ```
 
-4.4 Aqui listo todos os Filmes de um determinado género
+#### 4.4 Aqui vamos listar todos os Filmes de um determinado género
 
 ```sql
 Select * from Filmes
@@ -357,7 +357,7 @@ BEGIN
 END$$
 DELIMITER ;
 
-call update_cliente(11, 'Raquel Ferreira', 'raquel.ferreira@mail.com', '987654321')
+call update_cliente(10, 'Raquel Ferreira', 'raquel.ferreira@mail.com', '987654321')
 ```
 
 
