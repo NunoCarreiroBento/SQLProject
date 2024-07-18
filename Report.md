@@ -4,7 +4,7 @@
 
 Utilização do MySQL Workbench para a realização deste projeto.
 
-## 2. Criação da Base de Dados
+### 2. Criação da Base de Dados
 
 Criação da base de dados seguindo o modelo atribuído, com uma pequena alteração na tabela "Bilhetes", onde foi criada uma relação com os funcionários para saber qual funcionário vendeu um determinado bilhete para qual cliente.
 
@@ -122,7 +122,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 ```
 
-3. Inserção de Dados
+### 3. Inserção de Dados
 
 Inserção de uma certa quantidade de dados em cada respectiva tabela.
 
@@ -200,10 +200,10 @@ INSERT INTO `Cinema`.`Bilhetes` (`FuncionárioID`, `ClienteID`, `SessãoID`, `Qu
 
 ```
 
-4. Consultas SQL
+### 4. Consultas SQL
 
 Criação de várias Concultas para responder a perguntas sobre os dados.
-4.1 Quantos bilhetes foram vendidos por cada funcionário?
+#### 4.1 Quantos bilhetes foram vendidos por cada funcionário?
 
 ```sql
 
@@ -214,7 +214,7 @@ GROUP BY Funcionários.Nome;
 
 ```
 
-4.2 Qual é o total de receitas geradas por cada filme?
+#### 4.2 Qual é o total de receitas geradas por cada filme?
 
 ```sql
 
@@ -226,7 +226,7 @@ GROUP BY Filmes.Título;
 
 ```
 
-4.3 Quantos clientes compraram bilhetes para cada filme?
+#### 4.3 Quantos clientes compraram bilhetes para cada filme?
 
 ```sql
 
@@ -238,7 +238,7 @@ GROUP BY Filmes.Título;
 
 ```
 
-4.4 Qual funcionário gerou mais receita em vendas de bilhetes?
+#### 4.4 Qual funcionário gerou mais receita em vendas de bilhetes?
 
 ```sql
 
@@ -251,7 +251,7 @@ LIMIT 1;
 
 ```
 
-4.5 Qual é a média de bilhetes vendidos por sessão?
+#### 4.5 Qual é a média de bilhetes vendidos por sessão?
 
 ```sql
 
@@ -264,7 +264,7 @@ FROM (
 
 ```
 
-4.6 Qual filme teve a maior média de bilhetes vendidos por sessão?
+#### 4.6 Qual filme teve a maior média de bilhetes vendidos por sessão?
 
 ```sql
 
